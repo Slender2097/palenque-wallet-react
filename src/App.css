@@ -1,38 +1,182 @@
-.App {
+body {
+  color: #ffe28a;
+  background-color: #1A1A2E;
+  font-family: Andale Mono, monospace;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 150px; 
+}
+
+header {
+  border-bottom: 3px solid #ffe28a;
+  padding: 1%;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+h1 {
+  text-align: center;
+  color: #ffe28a;
+}
+
+/*img{
+  width: 100%;
+  height: 100%;
+}*/
+
+footer {
+  margin-top: auto;
+  border-top: 3px solid #ffe28a;
+  padding: 0.5%;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+footer p {
+  color: #ffe28a;
+}
+
+/* fix buttons when the scream get samller*/
+/* fix balance and price boxes space to .row-item boxes*/
+/* fix ibox boxes in general */
+
+/*.buttons {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 9%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.buttons button{
+  background-color: #ffe28a;
+  border: 3px solid #1A1A2E;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 1.5rem;
+  width: 120px;
+  cursor: pointer;
+}
+
+.buttons button:hover{
+  opacity: 0.6;
+}
+
+.paste_invoice, .create_invoice {
+  background-color: #ffe28a;
+  border: 3px solid #1A1A2E;
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  width: 50%;
+}
+
+.paste_invoice p, .create_invoice p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.25em;
+}
+
+.invoice_to_pay, .amount_of_new_invoice {
+  font-size: 1.15em;
+}
+
+.submitInvoiceToPay, .getInvoice {
+  font-size: 1.15em;
+}*/
+
+.balance-card {
+  background-color: #1A1A2E;
+  border: 3px solid #ffe28a;
+  padding: 0.5%;
+  width: 20%;
+  margin-top: 2%;
+  margin-bottom: 1%;
+  border-radius: 6px;
+}
+
+.balance-card h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.balance-card p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align:center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.row{
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
-.App-link {
-  color: #61dafb;
+.row-item {
+  margin-bottom: 50px;
+  background-color: #1A1A2E;
+  border: 3px solid #ffe28a;
+  border-radius: 5px;
+  height: 225px;
+  width: 35%;
+  overflow: scroll;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.row-item h3 {
+  padding-left: 3%;
+}
+
+.row-item p{
+  padding-left: 3%;
+}
+
+.transaction .transaction-amount {
+  padding-top: 1%;
+}
+
+.transaction-amount {
+  border-bottom: 1px solid #ffe28a;
+}
+
+@media (max-width: 876px) {
+  .row-item {
+      width: 100%;
+      height: 200px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .balance-card {
+      width: 100%;
+      text-align: center;
+      margin-right: 2%;
+      margin-left: 2%;
   }
 }
+
+@media (max-width: 615px) {
+  .row {
+      flex-direction: column;
+  }
+
+  .row-item {
+      margin-top: 1%;
+  }
+
+  .balance-card {
+      width: 88%;
+      margin: 0 auto;
+      margin-top: 1%;
+  }
+}
+

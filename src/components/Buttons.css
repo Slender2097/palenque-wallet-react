@@ -1,0 +1,29 @@
+label {
+    padding-bottom: 2%;
+   }
+   
+   .buttons {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+   }
+   
+   .button {
+    background-color: #ffe28a;
+    border: 3px solid #1A1A2E;
+    border-radius: 3px;
+    padding: 6px;
+    font-size: 1.5rem;
+    width: 150px;
+    cursor: pointer;
+   }
+   
+   .buttons button:hover {
+    cursor: pointer;
+    opacity: 0.6;
+   }
+   
