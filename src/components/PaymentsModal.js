@@ -1,28 +1,29 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import axios from "axios";
+import { QRCodeCanvas } from "qrcode.react";
 import "./PaymentsModal.css";
 
 const customStyles = {
  content: {
-   top: "20%",
-   left: "40%",
-   right: "40%",
-   bottom: "auto",
+  top: "10%", 
+  left: "30%", 
+  right: "30%", 
+  bottom: "10%", 
+  height: "auto", 
+  maxHeight: "80vh", 
+  overflow: "auto",
  },
 };
-
-
-
 
 const PaymentsModal = ({ modalState, setModalState }) => {
   const API_KEY = process.env.REACT_APP_X_API_KEY;
 
-
-    // Our state for the info we will send to either generate a new invoice or pay an invoice
+// Our state for the info we will send to either generate a new invoice or pay an invoice
  const [formData, setFormData] = useState({
     amount: 0,
     invoiceToPay: "",
+    memo: "",
   });
   // Our state for storing the invoice we created to be paid
   const [invoice, setInvoice] = useState("");
@@ -38,12 +39,10 @@ const PaymentsModal = ({ modalState, setModalState }) => {
     console.log(process.env.REACT_APP_X_API_KEY);
     console.log("API Key from .env:", API_KEY);
  
- 
     const headers = {
-      //here is the issue 
-      
       "X-Api-Key": API_KEY,
     };
+
     const data = {
       bolt11: formData.invoiceToPay,
       out: true,
@@ -73,8 +72,7 @@ const PaymentsModal = ({ modalState, setModalState }) => {
     const data = {
       amount: formData.amount,
       out: false,
-      // ToDo: Add additional form for user to be able to customize the memo
-      memo: "LNBits",
+      memo: formData.memo || "LNBits",
     };
     axios
       .post("https://demo.lnbits.com/api/v1/payments", data, { headers })
@@ -106,6 +104,7 @@ const PaymentsModal = ({ modalState, setModalState }) => {
   setFormData({
     amount: 0,
     invoiceToPay: "",
+    memo: formData.memo || "LNBits",
   });
 };
 
@@ -152,19 +151,40 @@ const PaymentsModal = ({ modalState, setModalState }) => {
              setFormData({ ...formData, amount: e.target.value })
            }
          />
+          
+          {/* Memo */}
+          <label>enter memo</label>
+          <input
+            type="text"
+            value={formData.memo}
+            onChange={(e) =>
+              setFormData({ ...formData, memo: e.target.value })
+            }
+            placeholder="Optional memo"
+          />
+
          <button className="button" onClick={(e) => handleReceive(e)}>
            Submit
          </button>
        </form>
      )}
+
      {/* If we are displaying our newly created invoice */}
      {invoice && (
        <section>
          <h3>Invoice created</h3>
-         <p>{invoice}</p>
-         {/* ToDo: Create a QR code out of this invoice as well */}
+         <div className="qr-code-container">
+            <QRCodeCanvas
+              value={invoice}
+              size={128} // Adjust size as needed
+              bgColor="#1A1A2E" // Match background
+              fgColor="#ffe28a" // Match text color
+            />
+          </div>
+          <p className="invoice-text">{invoice}</p>
        </section>
      )}
+     
      {/* If we are displaying the status of our successful payment */}
      {paymentInfo.paymentHash && (
        <section>

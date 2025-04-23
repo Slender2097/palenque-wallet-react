@@ -18,7 +18,6 @@ export const Buttons = () => {
          onClick={() =>
             setModalState({type: "send", open: true})
 
-           /*console.log("This button will open a modal to send a payment")*/
          }
        >
          Send
@@ -28,7 +27,6 @@ export const Buttons = () => {
          onClick={() =>
             setModalState({type: "receive", open:true})
            
-           /* console.log("This button will open a modal to receive a payment")*/
          }
        >
          Receive

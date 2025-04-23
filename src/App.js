@@ -32,7 +32,6 @@ function App() {
 
 
 const getWalletBalance = () => {
-// ToDo: Lookup how to move the X-API-Key to a .env file to keep it secret for when we push to Github
    const headers = {
      "X-Api-Key": API_KEY,
    };
@@ -46,8 +45,7 @@ const getWalletBalance = () => {
  };
 
 
-const getTransactions = () => {
-   // COMPLETE: Lookup how to move the X-API-Key to a .env file to keep it secret for when we push to Github 
+const getTransactions = () => { 
    const headers = {
      "X-Api-Key": API_KEY,
    };
@@ -79,7 +77,7 @@ const getTransactions = () => {
       return prevState;
     // If we have previous state than keep it and add the new price data to the end of the array
     return [
-      // Here we use the "spread operator" to copy the previous state
+    // Here we use the "spread operator" to copy the previous state
       ...prevState,
       {
         x: timestamp,
@@ -115,28 +113,31 @@ useEffect(() => {
      <header>
        <h1>Palenque Wallet</h1>
      </header>
-     { <Buttons /> }
-     
-     <div className="row">
-       <div className="balance-card">
-         <h2>Balance</h2>
-         <p>{balance} sats</p>
-       </div>
-       
-       <div className="balance-card">
-         <h2>Price</h2>
-         <p>${price}</p>
-       </div>
-     </div>
-     
-     <div className="row">
-       <div className="row-item">
-         <Transactions transactions={transactions}/>
-       </div>
-       <div className="row-item">
-        <Chart chartData={chartData} />
+    
+    <main className="content">
+      { <Buttons /> }
+      <div className="row">
+        <div className="balance-card">
+          <h2>Balance</h2>
+          <p>{balance} sats</p>
         </div>
-     </div>
+        
+        <div className="balance-card">
+          <h2>Price</h2>
+          <p>${price}</p>
+        </div>
+      </div>
+      
+      <div className="row">
+        <div className="row-item">
+          <Transactions transactions={transactions}/>
+        </div>
+        <div className="row-item chat-row-item">
+          <Chart chartData={chartData} />
+          </div>
+      </div>
+     </main>
+     
      <footer>
        <p>Made by LATAMS, for LATAMS.</p>
      </footer>

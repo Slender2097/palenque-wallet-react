@@ -5,12 +5,18 @@ form {
     display: flex;
     flex-direction: column;
     text-align: center;
-    width: 100%;
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    margin-bottom: 30px;
    }
 
 
    form .button {
     margin: 10% auto;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    width: 50%;
    }
    
    section h3 {
@@ -20,12 +26,37 @@ form {
    
    section p {
     word-wrap: break-word;
-    color: #1A1A2E;;
+    color: #1A1A2E;
    }
    
    .close-button {
     cursor: pointer;
     text-align: end;
    }
+
+   /* PaymentsModal.css */
+.qr-code-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0; /* Space around QR code */
+  }
+  
+  .invoice-text {
+    word-break: break-all; /* Handle long bolt11 string */
+    color: #1A1A2E;
+    font-size: 0.9rem; /* Smaller text to fit modal */
+    text-align: center;
+  }
+  
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  h3 {
+    color: #ffe28a;
+  }
    
    

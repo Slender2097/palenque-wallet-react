@@ -3,15 +3,59 @@ import "./Transactions.css";
 
 export const Transactions = ({transactions = []}) => {
 
-// ToDo: Improve tx parsing to display internal payments, incomplete payments, and further verify the transactions we are listing out
 const parseTx = (tx) => {
-  // turn unix timestamp into a date
-  // Todo: format date further to include hours, minutes, and seconds
-  const date = new Date(tx.time * 1000);
-  const formattedDate = date.toLocaleDateString("en-US");
-  // ToDo: Handle pending payments since we are currently ignoring them and not displaying them on our past transactions list
-  if (tx.pending) return null;
+  
+  if (!tx.checking_id || !tx.time || typeof tx.amount !== "number") {
+    console.warn("Invalid transaction:", tx);
+    return null; 
+  }
+  
+  const formatDate = (time) => {
+    if (!time) return "No Date Available"; 
+    const date = new Date(time); 
+    return isNaN(date.getTime())
+      ? "Invalid Date" 
+      : date.toLocaleString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+      }); 
+  };
+  
+  const formattedDate = formatDate(tx.time);
+  
+  // Handle pending (incomplete) payments
+  if (tx.pending || tx.status === "pending") {
+    return (
+      <div key={tx.checking_id} className="tx-item pending">
+        <p>
+          {tx.amount === 0 ? "Internal" : tx.amount > 0 ? "Receiving" : "Sending"}{" "}
+          {tx.bolt11 ? `${tx.bolt11.substring(0, 25)}...` : "Payment"}
+        </p>
+        <p className="tx-amount">
+          {tx.amount / 1000} sats (Pending)
+        </p>
+        <p className="transaction-date">{formattedDate}</p>
+      </div>
+    );
+  }
 
+  // Handle internal payments (amount === 0 or specific tag/memo)
+  if (tx.amount === 0 || tx.tag === "internal" || tx.memo?.includes("internal")) {
+    return (
+      <div key={tx.checking_id} className="tx-item internal">
+        <p>Internal Transfer {tx.memo || tx.bolt11?.substring(0, 25) + "..."}</p>
+        <p className="tx-amount">0 sats</p>
+        <p className="transaction-date">{formattedDate}</p>
+      </div>
+    );
+  }
+
+  // Handle received payments
   if (tx.amount > 0) {
     return (
       <div key={tx.checking_id} className="tx-item">
@@ -22,6 +66,7 @@ const parseTx = (tx) => {
     );
   }
 
+  // Handle sent payments
   if (tx.amount < 0) {
     return (
       <div id={tx.checking_id} key={tx.checking_id} className="tx-item">
@@ -31,18 +76,21 @@ const parseTx = (tx) => {
       </div>
     );
   }
-};
 
+  // Fallback for unhandled cases
+  console.warn("Unhandled transaction type:", tx);
+  return null;
+  };
 
- return (
-   <div>
-     <h3>Transactions</h3>
-     {transactions.map((transaction) => {
-       return parseTx(transaction);
-     })}
-   </div>
- );
-};
+  return (
+    <div>
+      <h3>Transactions</h3>
+      {transactions.length === 0 ? 
+      <p>No transactions available</p> 
+      : transactions.map(parseTx)}
+    </div>
+  );
+  };
 
 export default Transactions;
 
